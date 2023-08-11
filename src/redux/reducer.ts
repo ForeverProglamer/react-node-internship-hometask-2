@@ -27,7 +27,8 @@ const initialState: NoteState = {
       name: 'Note 3',
       createdAt: '2023-08-03',
       category: 'Random Thought',
-      content: 'This is the content of Note 3.',
+      content:
+        'This is the content of Note 3. This is the content of Note 3. This is the content of Note 3.',
       archived: false,
     },
     {

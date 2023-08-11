@@ -4,6 +4,7 @@ export interface BaseNote {
   name: string;
   category: NoteCategory;
   content: string;
+  [key: string]: string | boolean;
 }
 
 export interface Note extends BaseNote {
