@@ -3,6 +3,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 
 import Header from '../../layout/Header';
 import HomeTable from './HomeTable';
+import CreateNoteModal from './CreateNoteModal';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
 import { Summary } from '../../types/Summary';
@@ -12,6 +13,8 @@ const summaryKeys = ['category', 'count'];
 
 export default function Home() {
   const [showArchived, toggleShowArchived] = useState(false);
+
+  const [showCreateNoteModal, setShowCreateNoteModal] = useState(false);
 
   const notes = useTypedSelector((state) =>
     state.notes.filter((note) => note.archived === showArchived),
@@ -37,7 +40,12 @@ export default function Home() {
               hasControls
             />
             <div className="d-grid justify-content-end">
-              <Button variant="dark">New Note</Button>
+              <Button
+                variant="dark"
+                onClick={() => setShowCreateNoteModal(true)}
+              >
+                New Note
+              </Button>
             </div>
           </Col>
         </Row>
@@ -46,6 +54,10 @@ export default function Home() {
             <HomeTable title="Summary" headers={summaryKeys} data={summaries} />
           </Col>
         </Row>
+        <CreateNoteModal
+          show={showCreateNoteModal}
+          onClose={() => setShowCreateNoteModal(false)}
+        />
       </Container>
     </main>
   );
