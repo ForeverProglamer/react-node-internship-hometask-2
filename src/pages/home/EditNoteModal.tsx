@@ -6,7 +6,7 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 
 import { NoteCategory } from '../../types/Note';
 
-import timestampToDateString from '../../utils/date';
+import { parseDates, timestampToDateString } from '../../utils/date';
 import isValidNoteCategory from '../../utils/utils';
 
 type EditNoteModalProps = {
@@ -31,9 +31,6 @@ export default function EditNoteModal({
   const [name, setName] = useState(note?.name);
   const [category, setCategory] = useState(note?.category);
   const [content, setContent] = useState(note?.content);
-
-  // TODO dates attribute must be dynamically computed while rendering note
-  const dates = [];
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.currentTarget.value);
@@ -67,6 +64,10 @@ export default function EditNoteModal({
     console.log('Save');
     console.log({ name, category, content });
   };
+
+  const dates = parseDates(note?.content as string).map((date) => (
+    <ListGroup.Item key={undefined}>{date}</ListGroup.Item>
+  ));
 
   return (
     <ModalWindow
@@ -113,7 +114,9 @@ export default function EditNoteModal({
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="editNoteDates">Dates:</Form.Label>
-          <ListGroup horizontal id="editNoteDates" />
+          <ListGroup horizontal id="editNoteDates">
+            {dates}
+          </ListGroup>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="editNoteContent">Content:</Form.Label>

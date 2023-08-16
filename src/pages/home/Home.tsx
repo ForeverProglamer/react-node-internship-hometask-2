@@ -10,7 +10,7 @@ import { Summary } from '../../types/Summary';
 import NotesTableRow from './NotesTableRow';
 import SummaryTableRow from './SummaryTableRow';
 
-const notesListHeaders = ['Name', 'Created At', 'Category', 'Content'];
+const notesListHeaders = ['Name', 'Created At', 'Category', 'Content', 'Dates'];
 const summaryHeaders = ['Category', 'Count'];
 
 export default function Home() {

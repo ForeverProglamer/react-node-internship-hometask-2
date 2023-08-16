@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import EditNoteModal from './EditNoteModal';
 
-import timestampToDateString from '../../utils/date';
+import { timestampToDateString, parseDates } from '../../utils/date';
 
 import { Note } from '../../types/Note';
 
@@ -29,6 +29,9 @@ export default function NotesTableRow({ item }: NotesTableRowProps) {
       <td>{item.category}</td>
       <td className="text-truncate" style={{ maxWidth: '150px' }}>
         {item.content}
+      </td>
+      <td className="text-truncate" style={{ maxWidth: '150px' }}>
+        {parseDates(item.content).join(', ')}
       </td>
       <td className="text-end">
         <div className="btn-group">
