@@ -4,11 +4,11 @@ export interface BaseNote {
   name: string;
   category: NoteCategory;
   content: string;
-  [key: string]: string | boolean;
+  [key: string]: string | boolean | number;
 }
 
 export interface Note extends BaseNote {
-  createdAt: string;
+  createdAt: number;
   archived: boolean;
 }
 

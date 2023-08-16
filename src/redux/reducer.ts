@@ -10,53 +10,59 @@ import { NoteAction, NoteState } from '../types/Note';
 const initialState: NoteState = {
   notes: [
     {
-      name: 'Note 1',
-      createdAt: '2023-08-05',
+      name: 'Project Kickoff',
+      createdAt: 1678876800000,
       category: 'Task',
-      content: 'This is the content of Note 1.',
+      content:
+        'Prepare for the project kickoff meeting scheduled for 10/08/2023 and 12/08/2023. Share the project timeline and objectives.',
       archived: false,
     },
     {
-      name: 'Note 2',
-      createdAt: '2023-08-04',
+      name: 'Brainstorming Session',
+      createdAt: 1678862400000,
       category: 'Idea',
-      content: 'This is the content of Note 2.',
+      content:
+        'Conduct a brainstorming session for the app feature ideas on 11/08/2023 and 13/08/2023. Document creative concepts.',
       archived: true,
     },
     {
-      name: 'Note 3',
-      createdAt: '2023-08-03',
+      name: 'Important Deadline',
+      createdAt: 1678848000000,
+      category: 'Task',
+      content:
+        'Submit the quarterly report by 16/08/2023. Ensure accuracy and completeness.',
+      archived: false,
+    },
+    {
+      name: 'Development Sprint',
+      createdAt: 1678833600000,
+      category: 'Task',
+      content:
+        'Start the development sprint on 10/08/2023 and complete by 14/08/2023. Test thoroughly before deployment.',
+      archived: true,
+    },
+    {
+      name: 'Innovation Workshop',
+      createdAt: 1678790400000,
+      category: 'Idea',
+      content:
+        'Plan an innovation workshop for the department on 15/08/2023 and 16/08/2023. Invite external experts for insights.',
+      archived: false,
+    },
+    {
+      name: 'Inspiring Quote',
+      createdAt: 1678819200000,
       category: 'Random Thought',
       content:
-        'This is the content of Note 3. This is the content of Note 3. This is the content of Note 3.',
-      archived: false,
-    },
-    {
-      name: 'Note 4',
-      createdAt: '2023-08-02',
-      category: 'Task',
-      content: 'This is the content of Note 4.',
+        '"The only limit to our realization of tomorrow will be our doubts of today." - Franklin D. Roosevelt',
       archived: true,
     },
     {
-      name: 'Note 5',
-      createdAt: '2023-08-01',
-      category: 'Idea',
-      content: 'This is the content of Note 5.',
-      archived: false,
-    },
-    {
-      name: 'Note 6',
-      createdAt: '2023-07-31',
-      category: 'Random Thought',
-      content: 'This is the content of Note 6.',
-      archived: true,
-    },
-    {
-      name: 'Note 7',
-      createdAt: '2023-07-30',
+      name: 'Weekly Goals',
+      createdAt: 1678804800000,
       category: 'Task',
-      content: 'This is the content of Note 7.',
+      content:
+        'Set achievable goals for the week ahead, including personal growth, exercise, and relaxation by 13/08/2023 and 17/08/2023.',
       archived: false,
     },
   ],
