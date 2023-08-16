@@ -7,23 +7,22 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 import { NoteCategory } from '../../types/Note';
 
 import timestampToDateString from '../../utils/date';
-import { isValidNoteCategory } from '../../utils/utils';
+import isValidNoteCategory from '../../utils/utils';
 
 type EditNoteModalProps = {
   show?: boolean;
   onClose: () => void;
-  noteId?: number;
+  noteId: number;
 };
 
 const defaultProps = {
   show: false,
-  noteId: undefined,
 };
 
 export default function EditNoteModal({
   show = false,
   onClose,
-  noteId = undefined,
+  noteId,
 }: EditNoteModalProps) {
   const note = useTypedSelector((state) =>
     state.notes.find((elem) => elem.createdAt === noteId),

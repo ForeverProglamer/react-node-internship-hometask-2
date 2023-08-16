@@ -7,9 +7,11 @@ import CreateNoteModal from './CreateNoteModal';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
 import { Summary } from '../../types/Summary';
+import NotesTableRow from './NotesTableRow';
+import SummaryTableRow from './SummaryTableRow';
 
-const noteKeys = ['name', 'createdAt', 'category', 'content'];
-const summaryKeys = ['category', 'count'];
+const notesListHeaders = ['Name', 'Created At', 'Category', 'Content'];
+const summaryHeaders = ['Category', 'Count'];
 
 export default function Home() {
   const [showArchived, toggleShowArchived] = useState(false);
@@ -27,6 +29,14 @@ export default function Home() {
     { category: 'Random Thought', count: 0 },
   ];
 
+  const noteRows = notes.map((note) => (
+    <NotesTableRow key={note.createdAt} item={note} />
+  ));
+
+  const summaryRows = summaries.map((summary) => (
+    <SummaryTableRow key={summary.category} item={summary} />
+  ));
+
   return (
     <main>
       <Header onViewChange={() => toggleShowArchived((prev) => !prev)} />
@@ -35,10 +45,11 @@ export default function Home() {
           <Col>
             <HomeTable
               title="Notes List"
-              headers={noteKeys}
-              data={notes}
-              hasControls
-            />
+              headers={notesListHeaders}
+              hasExtraColumn
+            >
+              {noteRows}
+            </HomeTable>
             <div className="d-grid justify-content-end">
               <Button
                 variant="dark"
@@ -51,7 +62,9 @@ export default function Home() {
         </Row>
         <Row className="py-2">
           <Col>
-            <HomeTable title="Summary" headers={summaryKeys} data={summaries} />
+            <HomeTable title="Summary" headers={summaryHeaders}>
+              {summaryRows}
+            </HomeTable>
           </Col>
         </Row>
         <CreateNoteModal
