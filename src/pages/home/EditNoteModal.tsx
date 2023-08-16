@@ -4,10 +4,10 @@ import { Form, ListGroup } from 'react-bootstrap';
 import ModalWindow from '../../layout/ModalWindow';
 import useTypedSelector from '../../hooks/useTypedSelector';
 
-import { NoteCategory } from '../../types/Note';
+import { Note, NoteCategory } from '../../types/Note';
 
 import { parseDates, timestampToDateString } from '../../utils/date';
-import isValidNoteCategory from '../../utils/utils';
+import isValidNoteCategory, { validateFormData } from '../../utils/utils';
 
 type EditNoteModalProps = {
   show?: boolean;
@@ -26,11 +26,14 @@ export default function EditNoteModal({
 }: EditNoteModalProps) {
   const note = useTypedSelector((state) =>
     state.notes.find((elem) => elem.createdAt === noteId),
-  );
+  ) as Note;
 
-  const [name, setName] = useState(note?.name);
-  const [category, setCategory] = useState(note?.category);
-  const [content, setContent] = useState(note?.content);
+  const [name, setName] = useState(note.name);
+  const [category, setCategory] = useState(note.category);
+  const [content, setContent] = useState(note.content);
+
+  const [nameError, setNameError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.currentTarget.value);
@@ -50,22 +53,38 @@ export default function EditNoteModal({
     setContent(event.currentTarget.value);
   };
 
+  const clearErrors = () => {
+    setNameError('');
+    setCategoryError('');
+  };
+
   const handleClose = () => {
     // if user don't save changes closing modal window, then
     // form values must be set to default
     setName(note?.name);
     setCategory(note?.category);
     setContent(note?.content);
+    clearErrors();
 
     onClose();
   };
 
   const handleEdit = () => {
     console.log('Save');
+
+    const errors = validateFormData({ name, category });
+
+    if (Object.values(errors).some((value) => value)) {
+      setNameError(errors.name);
+      setCategoryError(errors.category);
+      return;
+    }
+
     console.log({ name, category, content });
+    clearErrors();
   };
 
-  const dates = parseDates(note?.content as string).map((date) => (
+  const dates = parseDates(note.content).map((date) => (
     <ListGroup.Item key={undefined}>{date}</ListGroup.Item>
   ));
 
@@ -86,7 +105,9 @@ export default function EditNoteModal({
             value={name}
             onChange={handleNameChange}
           />
-          <div className="text-danger" id="editNoteNameError" />
+          <div className="text-danger" id="editNoteNameError">
+            {nameError}
+          </div>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="editNoteCreatedAt">Created At:</Form.Label>
@@ -94,7 +115,7 @@ export default function EditNoteModal({
             type="text"
             id="editNoteCreatedAt"
             readOnly
-            value={timestampToDateString(note?.createdAt as number)}
+            value={timestampToDateString(note.createdAt)}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -110,7 +131,9 @@ export default function EditNoteModal({
             <option value="Idea">Idea</option>
             <option value="Random Thought">Random Thought</option>
           </Form.Select>
-          <div className="text-danger" id="editNoteCategoryError" />
+          <div className="text-danger" id="editNoteCategoryError">
+            {categoryError}
+          </div>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="editNoteDates">Dates:</Form.Label>

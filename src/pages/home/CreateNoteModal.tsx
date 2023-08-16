@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
+import isValidNoteCategory, { validateFormData } from '../../utils/utils';
 
 type CreateNoteModalProps = {
   show?: boolean;
@@ -13,12 +14,15 @@ const defaultProps = {
 };
 
 export default function CreateNoteModal({
-  show,
+  show = false,
   onClose,
 }: CreateNoteModalProps) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
+
+  const [nameError, setNameError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.currentTarget.value);
@@ -27,7 +31,8 @@ export default function CreateNoteModal({
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    setCategory(event.currentTarget.value);
+    const categoryValue = event.currentTarget.value;
+    if (isValidNoteCategory(categoryValue)) setCategory(categoryValue);
   };
 
   const handleContentChange = (
@@ -36,16 +41,35 @@ export default function CreateNoteModal({
     setContent(event.currentTarget.value);
   };
 
+  const clearErrors = () => {
+    setNameError('');
+    setCategoryError('');
+  };
+
   const handleCreate = () => {
     console.log('Create');
+    const errors = validateFormData({ name, category });
+
+    if (Object.values(errors).some((value) => value)) {
+      setNameError(errors.name);
+      setCategoryError(errors.category);
+      return;
+    }
+
     console.log({ name, category, content });
+    clearErrors();
+  };
+
+  const handleClose = () => {
+    clearErrors();
+    onClose();
   };
 
   return (
     <ModalWindow
       title="Create Note"
       show={show}
-      onClose={onClose}
+      onClose={handleClose}
       actionTitle="Create"
       onAction={handleCreate}
     >
@@ -59,7 +83,9 @@ export default function CreateNoteModal({
             onChange={handleNameChange}
             required
           />
-          <div className="text-danger" id="create-note-name-error" />
+          <div className="text-danger" id="create-note-name-error">
+            {nameError}
+          </div>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="createNoteCategory">Category:</Form.Label>
@@ -75,7 +101,9 @@ export default function CreateNoteModal({
             <option value="Idea">Idea</option>
             <option value="Random Thought">Random Thought</option>
           </Form.Select>
-          <div className="text-danger" id="create-note-category-error" />
+          <div className="text-danger" id="create-note-category-error">
+            {categoryError}
+          </div>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="createNoteContent">Content:</Form.Label>
