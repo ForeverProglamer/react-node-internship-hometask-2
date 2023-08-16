@@ -1,3 +1,8 @@
+const validNoteCategories = ['Task', 'Idea', 'Random Thought'];
+
+export const isValidNoteCategory = (value: string): boolean =>
+  validNoteCategories.includes(value);
+
 const capitalizeWord = (word: string): string => {
   return word[0].toUpperCase() + word.slice(1);
 };

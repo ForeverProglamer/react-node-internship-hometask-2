@@ -6,6 +6,7 @@ import { Note } from '../../types/Note';
 import { Summary } from '../../types/Summary';
 
 import camelCaseKeyToTableHeader from '../../utils/utils';
+import timestampToDateString from '../../utils/date';
 
 type HomeTableProps = {
   title: string;
@@ -25,10 +26,15 @@ export default function HomeTable({
   hasControls = false,
 }: HomeTableProps) {
   const getDataValues = (item: Note | Summary) =>
-    headers.map((key) => item[key]);
+    headers.map((key) => {
+      const value = item[key];
+      if (key === 'createdAt') return timestampToDateString(value as number);
+      return value;
+    });
 
   const dataRows = data.map((item) => (
     <HomeTableRow
+      noteId={item.createdAt as number}
       key={item.createdAt}
       data={getDataValues(item)}
       hasControls={hasControls}
