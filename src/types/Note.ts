@@ -11,13 +11,47 @@ export interface Note extends BaseNote {
   archived: boolean;
 }
 
-export type NoteAction = {
-  type: string;
-  payload?: {
-    index?: number;
-    note?: Note;
+export enum NoteActionType {
+  ADD = 'notes/add',
+  UPDATE = 'notes/update',
+  TOGGLE_ARCHIVE = 'notes/toggleArchive',
+  DELETE = 'notes/delete',
+}
+
+export type AddAction = {
+  type: NoteActionType.ADD;
+  payload: {
+    note: BaseNote;
   };
 };
+
+export type UpdateAction = {
+  type: NoteActionType.UPDATE;
+  payload: {
+    noteId: number;
+    note: BaseNote;
+  };
+};
+
+export type ToggleArchiveAction = {
+  type: NoteActionType.TOGGLE_ARCHIVE;
+  payload: {
+    noteId: number;
+  };
+};
+
+export type DeleteAction = {
+  type: NoteActionType.DELETE;
+  payload: {
+    noteId: number;
+  };
+};
+
+export type NoteAction =
+  | AddAction
+  | UpdateAction
+  | ToggleArchiveAction
+  | DeleteAction;
 
 export type NoteState = {
   notes: Note[];

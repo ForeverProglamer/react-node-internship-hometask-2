@@ -1,11 +1,4 @@
-import {
-  ADD_NOTE,
-  DELETE_NOTE,
-  TOGGLE_ARCHIVE_NOTE,
-  UPDATE_NOTE,
-} from './actions';
-
-import { NoteAction, NoteState } from '../types/Note';
+import { NoteAction, NoteActionType, NoteState } from '../types/Note';
 
 const initialState: NoteState = {
   notes: [
@@ -73,13 +66,13 @@ export const reducer = (
   action: NoteAction,
 ): NoteState => {
   switch (action.type) {
-    case ADD_NOTE:
+    case NoteActionType.ADD:
       return { ...state };
-    case UPDATE_NOTE:
+    case NoteActionType.UPDATE:
       return { ...state };
-    case DELETE_NOTE:
+    case NoteActionType.DELETE:
       return { ...state };
-    case TOGGLE_ARCHIVE_NOTE:
+    case NoteActionType.TOGGLE_ARCHIVE:
       return { ...state };
     default:
       return state;
