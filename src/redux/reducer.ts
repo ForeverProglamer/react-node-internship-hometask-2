@@ -1,4 +1,9 @@
-import { NoteAction, NoteActionType, NoteState } from '../types/Note';
+import {
+  AddAction,
+  NoteAction,
+  NoteActionType,
+  NoteState,
+} from '../types/Note';
 
 const initialState: NoteState = {
   notes: [
@@ -61,13 +66,22 @@ const initialState: NoteState = {
   ],
 };
 
+const addNote = (state: NoteState, action: AddAction): NoteState => ({
+  ...state,
+  notes: state.notes.concat({
+    ...action.payload.note,
+    createdAt: Date.now(),
+    archived: false,
+  }),
+});
+
 export const reducer = (
   state: NoteState = initialState, // eslint-disable-line @typescript-eslint/default-param-last
   action: NoteAction,
 ): NoteState => {
   switch (action.type) {
     case NoteActionType.ADD:
-      return { ...state };
+      return addNote(state, action);
     case NoteActionType.UPDATE:
       return { ...state };
     case NoteActionType.DELETE:

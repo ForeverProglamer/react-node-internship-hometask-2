@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
 import isValidNoteCategory, { validateFormData } from '../../utils/utils';
+import { addNote } from '../../redux/actions';
+import { BaseNote } from '../../types/Note';
 
 type CreateNoteModalProps = {
   show?: boolean;
@@ -17,6 +20,8 @@ export default function CreateNoteModal({
   show = false,
   onClose,
 }: CreateNoteModalProps) {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
@@ -41,6 +46,12 @@ export default function CreateNoteModal({
     setContent(event.currentTarget.value);
   };
 
+  const clearFormData = () => {
+    setName('');
+    setCategory('');
+    setContent('');
+  };
+
   const clearErrors = () => {
     setNameError('');
     setCategoryError('');
@@ -56,7 +67,11 @@ export default function CreateNoteModal({
       return;
     }
 
-    console.log({ name, category, content });
+    const newNote = { name, category, content } as BaseNote;
+    console.log(newNote);
+    dispatch(addNote(newNote));
+
+    clearFormData();
     clearErrors();
   };
 
