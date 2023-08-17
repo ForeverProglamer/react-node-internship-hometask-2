@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, ListGroup } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
 import useTypedSelector from '../../hooks/useTypedSelector';
 
-import { Note, NoteCategory } from '../../types/Note';
+import { BaseNote, Note, NoteCategory } from '../../types/Note';
 
 import { parseDates, timestampToDateString } from '../../utils/date';
 import isValidNoteCategory, { validateFormData } from '../../utils/utils';
+import { updateNote } from '../../redux/actions';
 
 type EditNoteModalProps = {
   show?: boolean;
@@ -27,6 +29,8 @@ export default function EditNoteModal({
   const note = useTypedSelector((state) =>
     state.notes.find((elem) => elem.createdAt === noteId),
   ) as Note;
+
+  const dispatch = useDispatch();
 
   const [name, setName] = useState(note.name);
   const [category, setCategory] = useState(note.category);
@@ -61,9 +65,9 @@ export default function EditNoteModal({
   const handleClose = () => {
     // if user don't save changes closing modal window, then
     // form values must be set to default
-    setName(note?.name);
-    setCategory(note?.category);
-    setContent(note?.content);
+    setName(note.name);
+    setCategory(note.category);
+    setContent(note.content);
     clearErrors();
 
     onClose();
@@ -80,7 +84,10 @@ export default function EditNoteModal({
       return;
     }
 
+    const updatedNote = { name, category, content } as BaseNote;
     console.log({ name, category, content });
+    dispatch(updateNote(note.createdAt, updatedNote));
+
     clearErrors();
   };
 

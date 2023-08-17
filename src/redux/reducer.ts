@@ -3,6 +3,7 @@ import {
   NoteAction,
   NoteActionType,
   NoteState,
+  UpdateAction,
 } from '../types/Note';
 
 const initialState: NoteState = {
@@ -75,6 +76,20 @@ const addNote = (state: NoteState, action: AddAction): NoteState => ({
   }),
 });
 
+const updateNote = (state: NoteState, action: UpdateAction): NoteState => {
+  const index = state.notes.findIndex(
+    (note) => note.createdAt === action.payload.noteId,
+  );
+  const updated = { ...state.notes[index], ...action.payload.note };
+
+  return {
+    ...state,
+    notes: state.notes
+      .slice(0, index)
+      .concat(updated, state.notes.slice(index + 1)),
+  };
+};
+
 export const reducer = (
   state: NoteState = initialState, // eslint-disable-line @typescript-eslint/default-param-last
   action: NoteAction,
@@ -83,7 +98,7 @@ export const reducer = (
     case NoteActionType.ADD:
       return addNote(state, action);
     case NoteActionType.UPDATE:
-      return { ...state };
+      return updateNote(state, action);
     case NoteActionType.DELETE:
       return { ...state };
     case NoteActionType.TOGGLE_ARCHIVE:
