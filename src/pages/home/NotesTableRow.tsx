@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import {
   faBoxArchive,
@@ -12,6 +13,7 @@ import EditNoteModal from './EditNoteModal';
 import { timestampToDateString, parseDates } from '../../utils/date';
 
 import { Note } from '../../types/Note';
+import { toggleArchiveNote } from '../../redux/actions';
 
 type NotesTableRowProps = {
   item: Note;
@@ -21,6 +23,8 @@ const defaultProps = {};
 
 export default function NotesTableRow({ item }: NotesTableRowProps) {
   const [showEditNoteModal, setShowEditNoteModal] = useState(false);
+
+  const dispatch = useDispatch();
 
   return (
     <tr>
@@ -43,7 +47,12 @@ export default function NotesTableRow({ item }: NotesTableRowProps) {
           >
             <FontAwesomeIcon icon={faPenToSquare} size="lg" />
           </Button>
-          <Button variant="dark" size="sm" aria-label="Archive">
+          <Button
+            variant="dark"
+            size="sm"
+            aria-label="Archive"
+            onClick={() => dispatch(toggleArchiveNote(item.createdAt))}
+          >
             <FontAwesomeIcon icon={faBoxArchive} size="lg" />
           </Button>
           <Button variant="dark" size="sm" aria-label="Delete">
