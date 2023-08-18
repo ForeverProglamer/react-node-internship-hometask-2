@@ -14,7 +14,7 @@ const notesListHeaders = ['Name', 'Created At', 'Category', 'Content', 'Dates'];
 const summaryHeaders = ['Category', 'Count'];
 
 export default function Home() {
-  const [showArchived, toggleShowArchived] = useState(false);
+  const [showArchived, setShowArchived] = useState(false);
 
   const [showCreateNoteModal, setShowCreateNoteModal] = useState(false);
 
@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <main>
-      <Header onViewChange={() => toggleShowArchived((prev) => !prev)} />
+      <Header onViewChange={() => setShowArchived((prev) => !prev)} />
       <Container className="py-4">
         <Row className="mb-2">
           <Col>
