@@ -9,7 +9,7 @@ const fieldIsRequired = (fieldName: string) => `${fieldName} is required field`;
 const fieldMustBeLongerThan = (fieldName: string, value: number) =>
   `${fieldName} must be longer than ${value} characters`;
 
-const isValidNoteCategory = (value: string): boolean =>
+export const isValidNoteCategory = (value: string): boolean =>
   validNoteCategories.includes(value);
 
 type FormData = {
@@ -50,5 +50,3 @@ export const generateSummaries = (notes: Note[]): Summary[] => {
     count,
   })) as Summary[];
 };
-
-export default isValidNoteCategory;
