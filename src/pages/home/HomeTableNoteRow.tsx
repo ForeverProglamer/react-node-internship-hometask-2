@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import EditNoteModal from './EditNoteModal';
+import HomeEditNoteModal from './HomeEditNoteModal';
 
 import { timestampToDateString, parseDates } from '../../utils/date';
 
@@ -63,7 +63,7 @@ export default function HomeTableNoteRow({ item }: HomeTableNoteRowProps) {
           >
             <FontAwesomeIcon icon={faTrash} size="lg" />
           </Button>
-          <EditNoteModal
+          <HomeEditNoteModal
             show={showEditNoteModal}
             onClose={() => setShowEditNoteModal(false)}
             noteId={item.createdAt}

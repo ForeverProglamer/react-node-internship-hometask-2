@@ -7,7 +7,7 @@ import { isValidNoteCategory, validateFormData } from '../../utils/utils';
 import { addNote } from '../../redux/actions';
 import { BaseNote } from '../../types/Note';
 
-type CreateNoteModalProps = {
+type HomeCreateNoteModalProps = {
   show?: boolean;
   onClose: () => void;
 };
@@ -16,10 +16,10 @@ const defaultProps = {
   show: false,
 };
 
-export default function CreateNoteModal({
+export default function HomeCreateNoteModal({
   show = false,
   onClose,
-}: CreateNoteModalProps) {
+}: HomeCreateNoteModalProps) {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -136,4 +136,4 @@ export default function CreateNoteModal({
   );
 }
 
-CreateNoteModal.defaultProps = defaultProps;
+HomeCreateNoteModal.defaultProps = defaultProps;

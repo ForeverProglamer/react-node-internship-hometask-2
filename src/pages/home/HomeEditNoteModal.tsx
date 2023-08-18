@@ -11,7 +11,7 @@ import { parseDates, timestampToDateString } from '../../utils/date';
 import { isValidNoteCategory, validateFormData } from '../../utils/utils';
 import { updateNote } from '../../redux/actions';
 
-type EditNoteModalProps = {
+type HomeEditNoteModalProps = {
   show?: boolean;
   onClose: () => void;
   noteId: number;
@@ -21,11 +21,11 @@ const defaultProps = {
   show: false,
 };
 
-export default function EditNoteModal({
+export default function HomeEditNoteModal({
   show = false,
   onClose,
   noteId,
-}: EditNoteModalProps) {
+}: HomeEditNoteModalProps) {
   const note = useTypedSelector((state) =>
     state.notes.find((elem) => elem.createdAt === noteId),
   ) as Note;
@@ -163,4 +163,4 @@ export default function EditNoteModal({
   );
 }
 
-EditNoteModal.defaultProps = defaultProps;
+HomeEditNoteModal.defaultProps = defaultProps;

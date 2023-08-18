@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 
 import Header from '../../layout/Header';
 import HomeTable from './HomeTable';
-import CreateNoteModal from './CreateNoteModal';
+import HomeCreateNoteModal from './HomeCreateNoteModal';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
 import HomeTableNoteRow from './HomeTableNoteRow';
@@ -63,7 +63,7 @@ export default function Home() {
             </HomeTable>
           </Col>
         </Row>
-        <CreateNoteModal
+        <HomeCreateNoteModal
           show={showCreateNoteModal}
           onClose={() => setShowCreateNoteModal(false)}
         />
