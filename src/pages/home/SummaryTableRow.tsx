@@ -1,4 +1,4 @@
-import { Summary } from '../../types/Summary';
+import { Summary } from '../../types/Note';
 
 type SummaryTableRowProps = {
   item: Summary;

@@ -1,5 +1,4 @@
-import { Note } from '../types/Note';
-import { Summary } from '../types/Summary';
+import { Note, Summary } from '../types/Note';
 
 const validNoteCategories = ['Task', 'Idea', 'Random Thought'];
 

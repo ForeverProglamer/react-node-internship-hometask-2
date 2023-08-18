@@ -11,6 +11,11 @@ export interface Note extends BaseNote {
   archived: boolean;
 }
 
+export interface Summary {
+  category: NoteCategory;
+  count: number;
+}
+
 export enum NoteActionType {
   ADD = 'notes/add',
   UPDATE = 'notes/update',
