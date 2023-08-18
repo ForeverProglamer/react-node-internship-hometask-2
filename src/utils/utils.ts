@@ -1,3 +1,6 @@
+import { Note } from '../types/Note';
+import { Summary } from '../types/Summary';
+
 const validNoteCategories = ['Task', 'Idea', 'Random Thought'];
 
 const maxNameLength = 4;
@@ -31,6 +34,21 @@ export const validateFormData = ({ name, category }: FormData): Errors => {
     errors.name = fieldMustBeLongerThan('Name', maxNameLength);
 
   return errors;
+};
+
+export const generateSummaries = (notes: Note[]): Summary[] => {
+  const counters = Object.fromEntries(
+    validNoteCategories.map((category) => [category, 0]),
+  );
+
+  notes.forEach((note) => {
+    counters[note.category] += 1;
+  });
+
+  return Object.entries(counters).map(([category, count]) => ({
+    category,
+    count,
+  })) as Summary[];
 };
 
 export default isValidNoteCategory;

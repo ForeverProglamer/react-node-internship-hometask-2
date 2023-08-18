@@ -6,9 +6,9 @@ import HomeTable from './HomeTable';
 import CreateNoteModal from './CreateNoteModal';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
-import { Summary } from '../../types/Summary';
 import NotesTableRow from './NotesTableRow';
 import SummaryTableRow from './SummaryTableRow';
+import { generateSummaries } from '../../utils/utils';
 
 const notesListHeaders = ['Name', 'Created At', 'Category', 'Content', 'Dates'];
 const summaryHeaders = ['Category', 'Count'];
@@ -21,13 +21,7 @@ export default function Home() {
   const notes = useTypedSelector((state) =>
     state.notes.filter((note) => note.archived === showArchived),
   );
-
-  // TODO replace with actual summary calculation
-  const summaries: Summary[] = [
-    { category: 'Task', count: 0 },
-    { category: 'Idea', count: 0 },
-    { category: 'Random Thought', count: 0 },
-  ];
+  const summaries = generateSummaries(notes);
 
   const noteRows = notes.map((note) => (
     <NotesTableRow key={note.createdAt} item={note} />
