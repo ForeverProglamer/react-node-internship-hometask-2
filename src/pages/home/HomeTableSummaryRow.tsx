@@ -1,12 +1,14 @@
 import { Summary } from '../../types/Note';
 
-type SummaryTableRowProps = {
+type HomeTableSummaryRowProps = {
   item: Summary;
 };
 
 const defaultProps = {};
 
-export default function SummaryTableRow({ item }: SummaryTableRowProps) {
+export default function HomeTableSummaryRow({
+  item,
+}: HomeTableSummaryRowProps) {
   return (
     <tr>
       <td>{item.category}</td>
@@ -15,4 +17,4 @@ export default function SummaryTableRow({ item }: SummaryTableRowProps) {
   );
 }
 
-SummaryTableRow.defaultProps = defaultProps;
+HomeTableSummaryRow.defaultProps = defaultProps;

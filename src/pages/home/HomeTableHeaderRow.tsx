@@ -1,4 +1,4 @@
-type TableHeaderRowProps = {
+type HomeTableHeaderRowProps = {
   data: string[];
   hasExtraItem?: boolean;
 };
@@ -7,10 +7,10 @@ const defaultProps = {
   hasExtraItem: false,
 };
 
-export default function TableHeaderRow({
+export default function HomeTableHeaderRow({
   data,
   hasExtraItem = false,
-}: TableHeaderRowProps) {
+}: HomeTableHeaderRowProps) {
   const headers = data.map((elem) => <th key={undefined}>{elem}</th>);
   return (
     <tr className="table-dark">
@@ -20,4 +20,4 @@ export default function TableHeaderRow({
   );
 }
 
-TableHeaderRow.defaultProps = defaultProps;
+HomeTableHeaderRow.defaultProps = defaultProps;

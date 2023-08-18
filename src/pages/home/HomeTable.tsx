@@ -1,6 +1,6 @@
 import Table from 'react-bootstrap/Table';
 
-import TableHeaderRow from './TableHeaderRow';
+import HomeTableHeaderRow from './HomeTableHeaderRow';
 
 type HomeTableProps = {
   title: string;
@@ -24,7 +24,7 @@ export default function HomeTable({
       <h3>{title}</h3>
       <Table variant="primary" id="notes-list">
         <thead>
-          <TableHeaderRow data={headers} hasExtraItem={hasExtraColumn} />
+          <HomeTableHeaderRow data={headers} hasExtraItem={hasExtraColumn} />
         </thead>
         <tbody>{children}</tbody>
       </Table>

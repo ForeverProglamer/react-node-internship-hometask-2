@@ -15,13 +15,13 @@ import { timestampToDateString, parseDates } from '../../utils/date';
 import { Note } from '../../types/Note';
 import { deleteNote, toggleArchiveNote } from '../../redux/actions';
 
-type NotesTableRowProps = {
+type HomeTableNoteRowProps = {
   item: Note;
 };
 
 const defaultProps = {};
 
-export default function NotesTableRow({ item }: NotesTableRowProps) {
+export default function HomeTableNoteRow({ item }: HomeTableNoteRowProps) {
   const [showEditNoteModal, setShowEditNoteModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -74,4 +74,4 @@ export default function NotesTableRow({ item }: NotesTableRowProps) {
   );
 }
 
-NotesTableRow.defaultProps = defaultProps;
+HomeTableNoteRow.defaultProps = defaultProps;

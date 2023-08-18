@@ -6,8 +6,8 @@ import HomeTable from './HomeTable';
 import CreateNoteModal from './CreateNoteModal';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
-import NotesTableRow from './NotesTableRow';
-import SummaryTableRow from './SummaryTableRow';
+import HomeTableNoteRow from './HomeTableNoteRow';
+import HomeTableSummaryRow from './HomeTableSummaryRow';
 import { generateSummaries } from '../../utils/utils';
 
 const notesListHeaders = ['Name', 'Created At', 'Category', 'Content', 'Dates'];
@@ -24,11 +24,11 @@ export default function Home() {
   const summaries = generateSummaries(notes);
 
   const noteRows = notes.map((note) => (
-    <NotesTableRow key={note.createdAt} item={note} />
+    <HomeTableNoteRow key={note.createdAt} item={note} />
   ));
 
   const summaryRows = summaries.map((summary) => (
-    <SummaryTableRow key={summary.category} item={summary} />
+    <HomeTableSummaryRow key={summary.category} item={summary} />
   ));
 
   return (
