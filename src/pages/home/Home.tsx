@@ -45,12 +45,14 @@ export default function Home() {
               {noteRows}
             </HomeTable>
             <div className="d-grid justify-content-end">
-              <Button
-                variant="dark"
-                onClick={() => setShowCreateNoteModal(true)}
-              >
-                New Note
-              </Button>
+              {!showArchived && (
+                <Button
+                  variant="dark"
+                  onClick={() => setShowCreateNoteModal(true)}
+                >
+                  New Note
+                </Button>
+              )}
             </div>
           </Col>
         </Row>
