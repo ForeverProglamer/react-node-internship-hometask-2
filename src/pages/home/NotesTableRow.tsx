@@ -13,7 +13,7 @@ import EditNoteModal from './EditNoteModal';
 import { timestampToDateString, parseDates } from '../../utils/date';
 
 import { Note } from '../../types/Note';
-import { toggleArchiveNote } from '../../redux/actions';
+import { deleteNote, toggleArchiveNote } from '../../redux/actions';
 
 type NotesTableRowProps = {
   item: Note;
@@ -55,7 +55,12 @@ export default function NotesTableRow({ item }: NotesTableRowProps) {
           >
             <FontAwesomeIcon icon={faBoxArchive} size="lg" />
           </Button>
-          <Button variant="dark" size="sm" aria-label="Delete">
+          <Button
+            variant="dark"
+            size="sm"
+            aria-label="Delete"
+            onClick={() => dispatch(deleteNote(item.createdAt))}
+          >
             <FontAwesomeIcon icon={faTrash} size="lg" />
           </Button>
           <EditNoteModal

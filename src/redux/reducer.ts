@@ -1,5 +1,6 @@
 import {
   AddAction,
+  DeleteAction,
   NoteAction,
   NoteActionType,
   NoteState,
@@ -107,6 +108,16 @@ const toggleArchiveNote = (
   return { ...state, notes: newNotes };
 };
 
+const deleteNote = (state: NoteState, action: DeleteAction): NoteState => {
+  const index = state.notes.findIndex(
+    (note) => note.createdAt === action.payload.noteId,
+  );
+  return {
+    ...state,
+    notes: state.notes.slice(0, index).concat(state.notes.slice(index + 1)),
+  };
+};
+
 export const reducer = (
   state: NoteState = initialState, // eslint-disable-line @typescript-eslint/default-param-last
   action: NoteAction,
@@ -117,7 +128,7 @@ export const reducer = (
     case NoteActionType.UPDATE:
       return updateNote(state, action);
     case NoteActionType.DELETE:
-      return { ...state };
+      return deleteNote(state, action);
     case NoteActionType.TOGGLE_ARCHIVE:
       return toggleArchiveNote(state, action);
     default:
