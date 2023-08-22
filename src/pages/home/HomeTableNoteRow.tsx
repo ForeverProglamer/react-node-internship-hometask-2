@@ -13,7 +13,7 @@ import HomeEditNoteModal from './HomeEditNoteModal';
 import { timestampToDateString, parseDates } from '../../utils/date';
 
 import { Note } from '../../types/Note';
-import { deleteNote, toggleArchiveNote } from '../../redux/actions';
+import { deleteNote, toggleArchiveNote } from '../../redux/NoteActionCreators';
 
 type HomeTableNoteRowProps = {
   item: Note;

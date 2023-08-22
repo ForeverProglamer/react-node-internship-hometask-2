@@ -1,8 +1,10 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
-import { reducer } from './reducer';
+import noteReducer from './noteReducer';
 
-const store = createStore(reducer, composeWithDevTools());
+const store = createStore(noteReducer, composeWithDevTools());
+
+export type RootState = ReturnType<typeof store.getState>;
 
 export default store;

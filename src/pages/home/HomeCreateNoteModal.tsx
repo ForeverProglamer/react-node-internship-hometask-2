@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
 import { isValidNoteCategory, validateFormData } from '../../utils/utils';
-import { addNote } from '../../redux/actions';
+import { addNote } from '../../redux/NoteActionCreators';
 import { BaseNote } from '../../types/Note';
 
 type HomeCreateNoteModalProps = {

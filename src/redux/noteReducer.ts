@@ -118,7 +118,7 @@ const deleteNote = (state: NoteState, action: DeleteAction): NoteState => {
   };
 };
 
-export const reducer = (
+const noteReducer = (
   state: NoteState = initialState, // eslint-disable-line @typescript-eslint/default-param-last
   action: NoteAction,
 ): NoteState => {
@@ -136,4 +136,4 @@ export const reducer = (
   }
 };
 
-export type RootState = ReturnType<typeof reducer>;
+export default noteReducer;

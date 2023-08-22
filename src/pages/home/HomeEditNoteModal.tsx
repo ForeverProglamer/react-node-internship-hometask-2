@@ -9,7 +9,7 @@ import { BaseNote, Note, NoteCategory } from '../../types/Note';
 
 import { parseDates, timestampToDateString } from '../../utils/date';
 import { isValidNoteCategory, validateFormData } from '../../utils/utils';
-import { updateNote } from '../../redux/actions';
+import { updateNote } from '../../redux/NoteActionCreators';
 
 type HomeEditNoteModalProps = {
   show?: boolean;
