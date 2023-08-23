@@ -1,20 +1,25 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, ListGroup } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
-import useTypedSelector from '../../hooks/useTypedSelector';
 
-import { BaseNote, Note, NoteCategory } from '../../types/Note';
+import { BaseNote } from '../../types/Note';
 
 import { parseDates, timestampToDateString } from '../../utils/date';
-import { isValidNoteCategory, validateFormData } from '../../utils/utils';
-import { updateNote } from '../../redux/actions';
+import { validateFormData } from '../../utils/utils';
+import { updateNote } from '../../redux/NoteActionCreators';
+import {
+  resetFormErrors,
+  setFormErrors,
+  setFormValue,
+} from '../../redux/EditNoteFormActionCreators';
+import useTypedSelector from '../../hooks/useTypedSelector';
+
+type FormElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 type HomeEditNoteModalProps = {
   show?: boolean;
   onClose: () => void;
-  noteId: number;
 };
 
 const defaultProps = {
@@ -24,74 +29,33 @@ const defaultProps = {
 export default function HomeEditNoteModal({
   show = false,
   onClose,
-  noteId,
 }: HomeEditNoteModalProps) {
-  const note = useTypedSelector((state) =>
-    state.notes.find((elem) => elem.createdAt === noteId),
-  ) as Note;
-
+  const form = useTypedSelector((state) => state.editNoteForm);
   const dispatch = useDispatch();
 
-  const [name, setName] = useState(note.name);
-  const [category, setCategory] = useState(note.category);
-  const [content, setContent] = useState(note.content);
-
-  const [nameError, setNameError] = useState('');
-  const [categoryError, setCategoryError] = useState('');
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.currentTarget.value);
-  };
-
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const categoryValue = event.currentTarget.value;
-    if (isValidNoteCategory(categoryValue))
-      setCategory(categoryValue as NoteCategory);
-  };
-
-  const handleContentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setContent(event.currentTarget.value);
-  };
-
-  const clearErrors = () => {
-    setNameError('');
-    setCategoryError('');
-  };
-
-  const handleClose = () => {
-    // if user don't save changes closing modal window, then
-    // form values must be set to default
-    setName(note.name);
-    setCategory(note.category);
-    setContent(note.content);
-    clearErrors();
-
-    onClose();
+  const handleChange = (event: React.ChangeEvent<FormElement>) => {
+    dispatch(setFormValue({ [event.target.name]: event.target.value }));
   };
 
   const handleEdit = () => {
     console.log('Save');
 
+    const { name, category, content, createdAt } = form.values;
     const errors = validateFormData({ name, category });
 
     if (Object.values(errors).some((value) => value)) {
-      setNameError(errors.name);
-      setCategoryError(errors.category);
+      dispatch(setFormErrors(errors));
       return;
     }
 
     const updatedNote = { name, category, content } as BaseNote;
     console.log({ name, category, content });
-    dispatch(updateNote(note.createdAt, updatedNote));
+    dispatch(updateNote(createdAt, updatedNote));
 
-    clearErrors();
+    dispatch(resetFormErrors());
   };
 
-  const dates = parseDates(note.content).map((date) => (
+  const dates = parseDates(form.values.content).map((date) => (
     <ListGroup.Item key={undefined}>{date}</ListGroup.Item>
   ));
 
@@ -99,7 +63,7 @@ export default function HomeEditNoteModal({
     <ModalWindow
       title="Edit Note"
       show={show}
-      onClose={handleClose}
+      onClose={onClose}
       actionTitle="Save"
       onAction={handleEdit}
     >
@@ -109,11 +73,12 @@ export default function HomeEditNoteModal({
           <Form.Control
             type="text"
             id="editNoteName"
-            value={name}
-            onChange={handleNameChange}
+            name="name"
+            value={form.values.name}
+            onChange={handleChange}
           />
           <div className="text-danger" id="editNoteNameError">
-            {nameError}
+            {form.errors.name}
           </div>
         </Form.Group>
         <Form.Group className="mb-3">
@@ -122,7 +87,7 @@ export default function HomeEditNoteModal({
             type="text"
             id="editNoteCreatedAt"
             readOnly
-            value={timestampToDateString(note.createdAt)}
+            value={timestampToDateString(form.values.createdAt)}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -130,8 +95,9 @@ export default function HomeEditNoteModal({
           <Form.Select
             id="editNoteCategory"
             aria-label="categorySelect"
-            value={category}
-            onChange={handleCategoryChange}
+            name="category"
+            value={form.values.category}
+            onChange={handleChange}
           >
             <option value="">Select category</option>
             <option value="Task">Task</option>
@@ -139,7 +105,7 @@ export default function HomeEditNoteModal({
             <option value="Random Thought">Random Thought</option>
           </Form.Select>
           <div className="text-danger" id="editNoteCategoryError">
-            {categoryError}
+            {form.errors.category}
           </div>
         </Form.Group>
         <Form.Group className="mb-3">
@@ -154,8 +120,9 @@ export default function HomeEditNoteModal({
             as="textarea"
             id="editNoteContent"
             rows={5}
-            value={content}
-            onChange={handleContentChange}
+            name="content"
+            value={form.values.content}
+            onChange={handleChange}
           />
         </Form.Group>
       </Form>

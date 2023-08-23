@@ -1,8 +1,17 @@
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
-import { reducer } from './reducer';
+import noteReducer from './noteReducer';
+import editNoteFormReducer from './editNoteFormReducer';
 
-const store = createStore(reducer, composeWithDevTools());
+const store = createStore(
+  combineReducers({
+    notes: noteReducer,
+    editNoteForm: editNoteFormReducer,
+  }),
+  composeWithDevTools(),
+);
+
+export type RootState = ReturnType<typeof store.getState>;
 
 export default store;

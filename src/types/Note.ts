@@ -58,6 +58,4 @@ export type NoteAction =
   | ToggleArchiveAction
   | DeleteAction;
 
-export type NoteState = {
-  notes: Note[];
-};
+export type NoteState = Note[];
