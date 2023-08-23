@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
-import { isValidNoteCategory, validateFormData } from '../../utils/utils';
+import { validateFormData } from '../../utils/Utils';
 import { addNote } from '../../redux/NoteActionCreators';
 import { BaseNote } from '../../types/Note';
+
+type FormElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 type HomeCreateNoteModalProps = {
   show?: boolean;
@@ -22,48 +24,35 @@ export default function HomeCreateNoteModal({
 }: HomeCreateNoteModalProps) {
   const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
-  const [content, setContent] = useState('');
+  const [formValues, setFormValues] = useState({
+    name: '',
+    category: '',
+    content: '',
+  });
+  const [formErrors, setFormErrors] = useState({ name: '', category: '' });
 
-  const [nameError, setNameError] = useState('');
-  const [categoryError, setCategoryError] = useState('');
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.currentTarget.value);
-  };
-
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const categoryValue = event.currentTarget.value;
-    if (isValidNoteCategory(categoryValue)) setCategory(categoryValue);
-  };
-
-  const handleContentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setContent(event.currentTarget.value);
+  const handleChange = (event: React.ChangeEvent<FormElement>) => {
+    setFormValues((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   const clearFormData = () => {
-    setName('');
-    setCategory('');
-    setContent('');
+    setFormValues({ name: '', category: '', content: '' });
   };
 
   const clearErrors = () => {
-    setNameError('');
-    setCategoryError('');
+    setFormErrors({ name: '', category: '' });
   };
 
   const handleCreate = () => {
     console.log('Create');
+    const { name, category, content } = formValues;
     const errors = validateFormData({ name, category });
 
     if (Object.values(errors).some((value) => value)) {
-      setNameError(errors.name);
-      setCategoryError(errors.category);
+      setFormErrors(errors);
       return;
     }
 
@@ -94,30 +83,32 @@ export default function HomeCreateNoteModal({
           <Form.Control
             id="createNoteName"
             type="text"
-            value={name}
-            onChange={handleNameChange}
+            name="name"
+            value={formValues.name}
+            onChange={handleChange}
             required
           />
           <div className="text-danger" id="create-note-name-error">
-            {nameError}
+            {formErrors.name}
           </div>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="createNoteCategory">Category:</Form.Label>
           <Form.Select
             id="createNoteCategory"
-            value={category}
-            onChange={handleCategoryChange}
+            name="category"
+            value={formValues.category}
+            onChange={handleChange}
             aria-label="categorySelect"
             required
           >
-            <option value="Default">Select category</option>
+            <option value="">Select category</option>
             <option value="Task">Task</option>
             <option value="Idea">Idea</option>
             <option value="Random Thought">Random Thought</option>
           </Form.Select>
           <div className="text-danger" id="create-note-category-error">
-            {categoryError}
+            {formErrors.category}
           </div>
         </Form.Group>
         <Form.Group className="mb-3">
@@ -125,8 +116,9 @@ export default function HomeCreateNoteModal({
           <Form.Control
             id="createNoteContent"
             as="textarea"
-            value={content}
-            onChange={handleContentChange}
+            name="content"
+            value={formValues.content}
+            onChange={handleChange}
             rows={5}
             required
           />

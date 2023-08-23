@@ -9,7 +9,7 @@ import HomeCreateNoteModal from './HomeCreateNoteModal';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import HomeTableNoteRow from './HomeTableNoteRow';
 import HomeTableSummaryRow from './HomeTableSummaryRow';
-import { generateSummaries } from '../../utils/utils';
+import { generateSummaries } from '../../utils/Utils';
 import { Note, Summary } from '../../types/Note';
 import HomeEditNoteModal from './HomeEditNoteModal';
 import {

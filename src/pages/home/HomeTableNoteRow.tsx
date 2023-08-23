@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { timestampToDateString, parseDates } from '../../utils/date';
+import { timestampToDateString, parseDates } from '../../utils/Date';
 
 import { Note } from '../../types/Note';
 import { deleteNote, toggleArchiveNote } from '../../redux/NoteActionCreators';

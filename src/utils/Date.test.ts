@@ -1,4 +1,4 @@
-import { parseDates } from './date';
+import { parseDates } from './Date';
 
 describe('test parseDates', () => {
   test('returns empty array when input does not contain dates', () => {
