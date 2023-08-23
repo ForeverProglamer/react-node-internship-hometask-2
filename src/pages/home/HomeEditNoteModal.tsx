@@ -5,8 +5,8 @@ import ModalWindow from '../../layout/ModalWindow';
 
 import { BaseNote } from '../../types/Note';
 
-import { parseDates, timestampToDateString } from '../../utils/date';
-import { validateFormData } from '../../utils/utils';
+import { parseDates, timestampToDateString } from '../../utils/Date';
+import { validateFormData } from '../../utils/Utils';
 import { updateNote } from '../../redux/NoteActionCreators';
 import {
   resetFormErrors,

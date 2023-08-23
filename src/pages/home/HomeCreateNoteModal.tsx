@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 
 import ModalWindow from '../../layout/ModalWindow';
-import { validateFormData } from '../../utils/utils';
+import { validateFormData } from '../../utils/Utils';
 import { addNote } from '../../redux/NoteActionCreators';
 import { BaseNote } from '../../types/Note';
 
