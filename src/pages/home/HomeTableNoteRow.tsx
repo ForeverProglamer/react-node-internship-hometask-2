@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import {
@@ -8,8 +7,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import HomeEditNoteModal from './HomeEditNoteModal';
-
 import { timestampToDateString, parseDates } from '../../utils/date';
 
 import { Note } from '../../types/Note';
@@ -17,13 +14,15 @@ import { deleteNote, toggleArchiveNote } from '../../redux/NoteActionCreators';
 
 type HomeTableNoteRowProps = {
   item: Note;
+  onOpenEditNoteModal: () => void;
 };
 
 const defaultProps = {};
 
-export default function HomeTableNoteRow({ item }: HomeTableNoteRowProps) {
-  const [showEditNoteModal, setShowEditNoteModal] = useState(false);
-
+export default function HomeTableNoteRow({
+  item,
+  onOpenEditNoteModal,
+}: HomeTableNoteRowProps) {
   const dispatch = useDispatch();
 
   return (
@@ -43,7 +42,7 @@ export default function HomeTableNoteRow({ item }: HomeTableNoteRowProps) {
             variant="dark"
             size="sm"
             aria-label="Edit"
-            onClick={() => setShowEditNoteModal(true)}
+            onClick={onOpenEditNoteModal}
           >
             <FontAwesomeIcon icon={faPenToSquare} size="lg" />
           </Button>
@@ -63,11 +62,6 @@ export default function HomeTableNoteRow({ item }: HomeTableNoteRowProps) {
           >
             <FontAwesomeIcon icon={faTrash} size="lg" />
           </Button>
-          <HomeEditNoteModal
-            show={showEditNoteModal}
-            onClose={() => setShowEditNoteModal(false)}
-            noteId={item.createdAt}
-          />
         </div>
       </td>
     </tr>
