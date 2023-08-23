@@ -12,7 +12,10 @@ import HomeTableSummaryRow from './HomeTableSummaryRow';
 import { generateSummaries } from '../../utils/utils';
 import { Note, Summary } from '../../types/Note';
 import HomeEditNoteModal from './HomeEditNoteModal';
-import { reset, setValues } from '../../redux/EditNoteFormActionCreators';
+import {
+  resetForm,
+  setFormValues,
+} from '../../redux/EditNoteFormActionCreators';
 
 const notesListHeaders = ['Name', 'Created At', 'Category', 'Content', 'Dates'];
 const summaryHeaders = ['Category', 'Count'];
@@ -30,13 +33,13 @@ function NotesList({ items, archived }: NotesListProps) {
 
   const handleOpenEditNoteModal = (note: Note) => () => {
     const { name, category, content, createdAt } = note;
-    dispatch(setValues({ name, category, content, createdAt }));
+    dispatch(setFormValues({ name, category, content, createdAt }));
     setShowEditNoteModal(true);
   };
 
   const handleCloseEditNoteModal = () => {
     setShowEditNoteModal(false);
-    dispatch(reset());
+    dispatch(resetForm());
   };
 
   const noteRows = items.map((note) => (

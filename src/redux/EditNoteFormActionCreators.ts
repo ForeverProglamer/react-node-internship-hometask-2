@@ -21,12 +21,12 @@ type FormErrors = {
   category: string;
 };
 
-export const setValue = (value: NoteValue): SetValueAction => ({
+export const setFormValue = (value: NoteValue): SetValueAction => ({
   type: EditNoteFormActionType.SET_VALUE,
   payload: value,
 });
 
-export const setValues = ({
+export const setFormValues = ({
   name,
   category,
   content,
@@ -41,19 +41,22 @@ export const setValues = ({
   },
 });
 
-export const setErrors = ({ name, category }: FormErrors): SetErrorsAction => ({
+export const setFormErrors = ({
+  name,
+  category,
+}: FormErrors): SetErrorsAction => ({
   type: EditNoteFormActionType.SET_ERRORS,
   payload: { name, category },
 });
 
-export const reset = (): ResetAction => ({
+export const resetForm = (): ResetAction => ({
   type: EditNoteFormActionType.RESET,
 });
 
-export const resetValues = (): ResetValuesAction => ({
+export const resetFormValues = (): ResetValuesAction => ({
   type: EditNoteFormActionType.RESET_VALUES,
 });
 
-export const resetErrors = (): ResetErrorsAction => ({
+export const resetFormErrors = (): ResetErrorsAction => ({
   type: EditNoteFormActionType.RESET_ERRORS,
 });

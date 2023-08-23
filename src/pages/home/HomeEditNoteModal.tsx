@@ -9,9 +9,9 @@ import { parseDates, timestampToDateString } from '../../utils/date';
 import { validateFormData } from '../../utils/utils';
 import { updateNote } from '../../redux/NoteActionCreators';
 import {
-  resetErrors,
-  setErrors,
-  setValue,
+  resetFormErrors,
+  setFormErrors,
+  setFormValue,
 } from '../../redux/EditNoteFormActionCreators';
 import useTypedSelector from '../../hooks/useTypedSelector';
 
@@ -34,7 +34,7 @@ export default function HomeEditNoteModal({
   const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<FormElement>) => {
-    dispatch(setValue({ [event.target.name]: event.target.value }));
+    dispatch(setFormValue({ [event.target.name]: event.target.value }));
   };
 
   const handleEdit = () => {
@@ -44,7 +44,7 @@ export default function HomeEditNoteModal({
     const errors = validateFormData({ name, category });
 
     if (Object.values(errors).some((value) => value)) {
-      dispatch(setErrors(errors));
+      dispatch(setFormErrors(errors));
       return;
     }
 
@@ -52,7 +52,7 @@ export default function HomeEditNoteModal({
     console.log({ name, category, content });
     dispatch(updateNote(createdAt, updatedNote));
 
-    dispatch(resetErrors());
+    dispatch(resetFormErrors());
   };
 
   const dates = parseDates(form.values.content).map((date) => (
