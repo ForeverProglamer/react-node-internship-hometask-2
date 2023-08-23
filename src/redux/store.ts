@@ -2,10 +2,12 @@ import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 import noteReducer from './noteReducer';
+import editNoteFormReducer from './editNoteFormReducer';
 
 const store = createStore(
   combineReducers({
     notes: noteReducer,
+    editNoteForm: editNoteFormReducer,
   }),
   composeWithDevTools(),
 );
